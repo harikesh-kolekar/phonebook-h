@@ -76,4 +76,39 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  Email
+  config.action_mailer.default_url_options = { :host => 'phonebook-kolekar.rhcloud.com/' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
+  :domain               => "gmail.com",
+  :user_name            => 'phonebook.department@gmail.com',
+  :password             => 'departmentphonebook',
+  :authentication       => 'login',
+  :enable_starttls_auto => true  }
+  
+  
+  config.action_mailer.asset_host = "phonebook-kolekar.rhcloud.com/"
+
+  config.default_content_type = "text/html"
+
+
+  #GSM Key
+  $gcm = FCM.new("AAAA9BMu98o:APA91bHioubOYtHpYQ56Mb0pbsjrtDUm554u8_3xF3jf4G_R-Ec5rnlVQmo6p1joWJwjRngpLGOdLIJ57nKGYaZzaUo0htgZqLn9EiZOvgQ6N_Ja3Y1z_lwfuljDdp7p3BwrUvuqFlF4")
+  $key_name = "notification_production"
+  $notification_key='APA91bF_tfsLU7xpIU4wDhe_QqAn1JRhUnAGmgNsYzzUfOiUrHX__AmZRDgcwC2BEqGkJEVBBNGiLx_NdbAQPUhghXqwKXqhDnycqHEcAVgL8fZ9K1Ao08QxsgMTT_ZxonnihsodtHsv'
+  
+  $notification_key_1='APA91bHA-3HLSmeEp_6Yw3g0DoEd7-vDWOitluKhyBTRFRHqTOI3La7sA8kuSfMhaPDy20tnOzjV7xaOe2CrvtmaH2jLaDbfy8em8EYFxxTyMSeB3Ynx1Yz6IrkTAQ-Vo9ycDzbZ1rew'
+  $key_name_1 = "notification_production_1"
+  $notification_key_2='APA91bHuLHZ5lDWqQZMGSSbPWYD1U5SxxiqF3zZLDHiTWCy-DTDTpdiabvd2hTI4SO4jdkNDSARd633w6-3u3MtkjiVBH2ccbOXmyxiquZKAi-SytvPWh6vjmK0fs3SVK4CCBI8MuXrN'
+  $key_name_2 = "notification_production_2"
+  $notification_key_3='APA91bE5t0a77XdAt4Vp7FWZ7NDzSu1PHD759WL7lfqBgToSQMjKWgJsVGqVlcgxaZ8Gt5CgPAhwa_iwP2eRHkCLHwlLFyetSqQ8hHkxsSXnZydJUG7lIqNMvuBDod7zCC7gzGryOJma'
+  $key_name_3 = "notification_production_3"
+  $notification_key_4='APA91bHV9pcBjDoWmfp9n_7Ut9A4ODgy8LO0UojlB0SZM3r8NTNNmXRFOHiIBsZ57wSAH0s_L0t5sHgkrk5UWPn9UXyPnNz7VU2paHXSTBTH1l8XggB4y2zaLoDNTMquAPNtRUp3Il3z'
+  $key_name_4 = "notification_production_4"
+  $notification_key_5='APA91bFvGnwtf7-4nFORgaUarw41L1dOEvvVTGIQpkma5jnahZg23s5luNc6ohEo_Oxb0zy8xFWGH_5pD0ml4yKqaYpideCpjqQ21tetRZmd8XcOE5iXF3FuZLLqGJMh6olv1OWlF4fJ'
+  $key_name_5 = "notification_production_5"
 end

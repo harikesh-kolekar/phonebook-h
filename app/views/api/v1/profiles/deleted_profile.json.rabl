@@ -1,0 +1,1 @@
+node(:deleted_profile_ids) { $get_deleted_record_ids }

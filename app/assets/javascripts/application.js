@@ -12,5 +12,23 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+// require turbolinks
+//= require bootstrap.min.js
+//= require jquery.dataTables
+//= require moment.min.js
+//= require daterangepicker.js
+//= require bootstrap-multiselect
+ 
+$(document).ready(function() {
+  $('#table').DataTable({
+    bProcessing: true,
+      bServerSide: true,
+      sAjaxSource: $('#products').data('source')
+    });
+  $('#example').DataTable();
+});
+
+function show_error(message)
+{
+    $("#error")[0].innerHTML  = '<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"></span></button>' + message + ' </div>';
+}
