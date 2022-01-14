@@ -25,12 +25,110 @@ end
 
 #++++++++++++++++++++++++++++++Designation+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		
-				Designation.find_or_create_by(:name=>"Dy.Collector")
-				Designation.find_or_create_by(:name=>"Additional Collector")
-				Designation.find_or_create_by(:name=>"Dy.Collector")
-				Designation.find_or_create_by(:name=>"Tahsildar")
-				Designation.find_or_create_by(:name=>"IAS(MCS)")
-				Designation.find_or_create_by(:name=>"Others")
+				d = Designation.find_or_create_by(:name=>"Dy.Collector")
+				p = PresentPosting.find_or_create_by(:name=>"RDC")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Dy.Collector GAD")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"SDO")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"DYDEO")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"SLAO DC EGS")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"DC Rehabilitation")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"DSO")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"DC Protocal")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"DC SGY")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"DC Enc Removal")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"DC Stamp/Registration")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Other Deputation Fee Field for Other Category")
+				p.designation_id = d.id
+				p.save!
+				
+				
+				
+				
+				d = Designation.find_or_create_by(:name=>"Additional Collector")
+				p = PresentPosting.find_or_create_by(:name=>"Dy.Commissionar")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Regular AC")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Other Deputation Fee Field for Other Category")
+				p.designation_id = d.id
+				p.save!
+				
+				p = PresentPosting.find_or_create_by(:name=>"Caste Scrutiny Committee")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"AC Enc Removal")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"AC Stamps/Registration")
+				p.designation_id = d.id
+				p.save!
+				
+				
+				
+				
+			
+				d = Designation.find_or_create_by(:name=>"Tahsildar")
+				p = PresentPosting.find_or_create_by(:name=>"Regular")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Chitnis")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Leave Reserve Tahasildar")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Tahsildar Election")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Tahsildar Genral")
+				p.designation_id = d.id
+				p.save!
+				p = PresentPosting.find_or_create_by(:name=>"Other Deputation Fee Field for Other Category")
+				p.designation_id = d.id
+				p.save!
+				
+				
+				d = Designation.find_or_create_by(:name=>"IAS")
+				p = PresentPosting.find_or_create_by(:name=>"IAS")
+				p.designation_id = d.id
+				p.save!
+				
+				
+				d = Designation.find_or_create_by(:name=>"Revenue Dept Persons")
+				p = PresentPosting.find_or_create_by(:name=>"Revenue Dept Persons")
+				p.designation_id = d.id
+				p.save!
+				d = Designation.find_or_create_by(:name=>"Others")
+				
+				
+				p = PresentPosting.find_or_create_by(:name=>"Other")
+				p.designation_id = d.id
+				p.save!
+				
 	
 p "Designation Created"
 

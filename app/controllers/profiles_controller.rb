@@ -24,8 +24,12 @@ def upload_excel
 end
 
 def get_talukas
-  d = District.find_by_name(params[:name])
-  @home_district = d.talukas
+  if (params[:designation] == "designation")
+    @home_district = Designation.find_by_name( params[:name]).present_postings
+  else
+    d = District.find_by_name(params[:name])
+    @home_district = d.talukas
+  end
 end
 
 
@@ -40,8 +44,7 @@ end
   end
 
 def show
-  @user = Profile.find(params[:id])
-  
+  get_edit_data
 end
 
 
@@ -54,22 +57,13 @@ end
     @posting_district = @home_district
     @posting_talukas = @home_talukas
     @posting_taluka="NA"
-   @url = profiles_path
+    @url = profiles_path
+    @present_posts = [] 
   end
 
   # GET /uses/1/edit
   def edit
-    @home_district = District.find_by_name(@user.home_district) rescue nil
-    @home_district = District.find_by_name("NA") if @home_district.nil?
-    @home_talukas = @home_district.talukas
-    @home_taluka = @home_talukas.find_by_name(@user.home_taluka) rescue nil
-    @home_taluka = "NA" if @home_taluka.nil?
-    @posting_district = District.find_by_name(@user.posting_district) rescue nil
-    @posting_district = District.find_by_name("NA") if @posting_district.nil?
-    @posting_talukas = @posting_district.talukas
-    @posting_taluka = @posting_talukas.find_by_name(@user.posting_taluka) rescue nil
-    @posting_taluka = "NA" if @posting_taluka.nil?
-    @url = profile_path(@user)
+    get_edit_data
   end
 
   # POST /uses
@@ -79,6 +73,8 @@ end
     @user.date_of_birth = string_to_date(params[:profile][:date_of_birth]) 
     @user.date_of_join_dept = string_to_date(params[:profile][:date_of_join_dept]) 
     @user.posting_date = string_to_date(params[:profile][:posting_date]) 
+    @user.date_of_joining_cadra = string_to_date(params[:profile][:date_of_joining_cadra]) 
+
     respond_to do |format|
       if @user.save!
         format.html { redirect_to profiles_url, notice: 'Profile was successfully created.' }
@@ -97,6 +93,7 @@ end
     update_user_params["date_of_birth"] = string_to_date(params[:profile][:date_of_birth]) 
     update_user_params["date_of_join_dept"] = string_to_date(params[:profile][:date_of_join_dept]) 
     update_user_params["posting_date"] = string_to_date(params[:profile][:posting_date]) 
+    update_user_params["date_of_joining_cadra"] = string_to_date(params[:profile][:date_of_joining_cadra]) 
 
     respond_to do |format|
       if @user.update(update_user_params)
@@ -114,10 +111,25 @@ private
     def set_user
       @user = Profile.find(params[:id])
     end
+    
+    def get_edit_data
+       @home_district = District.find_by_name(@user.home_district) rescue nil
+        @home_district = District.find_by_name("NA") if @home_district.nil?
+        @home_talukas = @home_district.talukas
+        @home_taluka = @home_talukas.find_by_name(@user.home_taluka) rescue nil
+        @home_taluka = "NA" if @home_taluka.nil?
+        @posting_district = District.find_by_name(@user.posting_district) rescue nil
+        @posting_district = District.find_by_name("NA") if @posting_district.nil?
+        @posting_talukas = @posting_district.talukas
+        @posting_taluka = @posting_talukas.find_by_name(@user.posting_taluka) rescue nil
+        @posting_taluka = "NA" if @posting_taluka.nil?
+        @present_posts = Designation.find_by_name( @user.designation).present_postings rescue []
+        @url = profile_path(@user)
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:profile).permit(:name, :designation, :education, :phone_no, :mobile_no1, :mobile_no2, :home_taluka, :present_post, :posting_taluka, :batch, :other_info, :imei_code, :gcm_api_key, :home_district, :posting_district, :email, :photo, :icard )
+      params.require(:profile).permit(:name, :designation, :education, :phone_no, :mobile_no1, :mobile_no2, :home_taluka, :present_post, :posting_taluka, :batch, :other_info, :imei_code, :gcm_api_key, :home_district, :posting_district, :email, :photo, :icard ,:past_postings,:additional_info,:achievements)
     end
 
 end

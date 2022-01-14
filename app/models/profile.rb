@@ -44,6 +44,25 @@ class Profile < ActiveRecord::Base
   self.per_page = 100
   
 	def self.import(file)
+	position =    {'Full Name' => 0,
+ 'Email' => 1,
+ 'Mobile 1' => 2,
+ 'Mobile 2' => 3,
+ 'DOB' => 4,
+ 'Education' => 5,
+ 'Designation' => 6,
+ 'Present Post' => 7,
+ 'Posting Dist' => 8,
+ 'Posting Taluka' => 9,
+ 'Home Dist' => 10,
+ 'Home Taluka' => 11,
+ 'Joining date' => 12,
+ 'Posting Date' => 13,
+ 'Date Of Joining Present Cadre' => 14,
+ 'Past Positions' => 15,
+ 'Achievements/ Awards/ Notable work done' => 16,
+ 'Additional Info' => 17}
+
 	workbook = RubyXL::Parser.parse(file)
 	worksheet = workbook.worksheets[0]
   not_saved = []
@@ -56,41 +75,70 @@ class Profile < ActiveRecord::Base
       next
     end
     is_nil = 0
-    next if i[0].value == "Full Name"
+    next if i[0]&.value == "Full Name"
     begin
-      if(i[2].value.to_s.blank? && i[3].value.to_s.blank? && i[4].value.to_s.blank? && i[1].value.to_s.blank? && i[5].value.to_s.blank? && i[6].value.to_s.blank? && i[7].value.to_s.blank? && i[8].value.to_s.blank? )
+      if(i[position['Mobile 1']]&.value.to_s.blank? && i[position['Mobile 2']]&.value.to_s.blank? && i[position['Email']]&.value.to_s.blank? && i[position['Designation']]&.value.to_s.blank? && i[position['Posting Dist']]&.value.to_s.blank? && i[position['Home Dist']]&.value.to_s.blank? && i[position['DOB']]&.value.to_s.blank? )
         next
       end
-      if(i[2].value.to_s.blank? && i[3].value.to_s.blank? && i[4].value.to_s.blank?)
-        not_saved<<row
+      if(i[position['Mobile 1']]&.value.to_s.blank? && i[position['Mobile 2']]&.value.to_s.blank? && i[position['Email']]&.value.to_s.blank?)
+        not_saved << row
       next
       end  
 
-      u = Profile.find_by_email(i[4].value.to_s) unless i[4].value.to_s.blank?
+      u = Profile.find_by_email(i[position['Email']]&.value.to_s) unless i[position['Email']]&.value.to_s.blank?
       if u 
-      elsif (!i[2].value.to_s.blank? && get_user(i[2].value.to_s)) 
-        u = get_user(i[2].value.to_s)
-      elsif (!i[3].value.to_s.blank? && get_user(i[3].value.to_s))
-        u = get_user(i[3].value.to_s)
+      elsif (!i[position['Mobile 1']]&.value.to_s.blank? && get_user(i[position['Mobile 1']]&.value.to_s)) 
+        u = get_user(i[position['Mobile 1']]&.value.to_s)
+      elsif (!i[position['Mobile 2']]&.value.to_s.blank? && get_user(i[position['Mobile 2']]&.value.to_s))
+        u = get_user(i[position['Mobile 2']]&.value.to_s)
       else
         u = Profile.new()
       end
-      u.name = i[0].value.to_s
-      u.designation = i[1].value.to_s
-      if i[2].value.to_s.blank?
-      		u.mobile_no1 = i[3].value.to_s
+      u.name = i[position['Full Name']]&.value.to_s
+      u.designation = i[position['Designation']]&.value.to_s
+      if i[position['Mobile 1']]&.value.to_s.blank?
+      		u.mobile_no1 = i[position['Mobile 2']]&.value.to_s
       else
-      	u.mobile_no1 = i[2].value.to_s
-      	u.mobile_no2 = i[3].value.to_s
+      	u.mobile_no1 = i[position['Mobile 1']]&.value.to_s
+      	u.mobile_no2 = i[position['Mobile 2']]&.value.to_s
       end
-      u.email = i[4].value.to_s
-      u.posting_district = i[5].value.to_s
-      u.home_district = i[6].value.to_s
-      u.date_of_birth = self.convert_string_to_date i[7].value.to_s
-      u.other_info = i[8].value.to_s
+      u.email = i[position['Email']]&.value.to_s
+      u.posting_district = i[position['Posting Dist']]&.value.to_s
+      u.home_district = i[position['Home Dist']]&.value.to_s
+      u.date_of_birth = self.convert_string_to_date i[position['DOB']]&.value.to_s
+      u.date_of_join_dept = self.convert_string_to_date i[position['Joining date']]&.value.to_s
+      u.posting_date = self.convert_string_to_date i[position['Posting Date']]&.value.to_s
+      u.date_of_joining_cadra = self.convert_string_to_date i[position['Date Of Joining Present Cadre']]&.value.to_s
+      u.past_postings = i[position['Past Positions']]&.value.to_s
+      u.achievements = i[position['Achievements/ Awards/ Notable work done']]&.value.to_s
+      u.additional_info = i[position['Additional Info']]&.value.to_s
+      u.home_taluka = i[position['Home Taluka']]&.value.to_s
+      u.posting_taluka = i[position['Posting Taluka']]&.value.to_s
+      u.education = i[position['Education']]&.value.to_s
+      u.present_post = i[position['Present Post']]&.value.to_s
       u.save!
     rescue Exception => e
-      not_saved<<row
+      pp e
+      begin
+        p "Mobile 1 = #{i[position['Mobile 1']]&.value.to_s}"
+        p "Mobile 2 = #{i[position['Mobile 2']]&.value.to_s}"
+        p "email = #{i[position['Email']]&.value.to_s}"
+        p "posting_district = #{i[position['Posting Dist']]&.value.to_s}"
+        p "home_district = #{i[position['Home Dist']]&.value.to_s}"
+        p "date_of_birth = #{self.convert_string_to_date i[position['DOB']]&.value.to_s}"
+        p "date_of_join_dept = #{self.convert_string_to_date i[position['Joining date']]&.value.to_s}"
+        p "posting_date = #{self.convert_string_to_date i[position['Posting Date']]&.value.to_s}"
+        p "date_of_joining_cadra = #{self.convert_string_to_date i[position['Date Of Joining Present Cadre']]&.value.to_s}"
+        p "past_postings = #{i[position['Past Positions']]&.value.to_s}"
+        p "achievements = #{i[position['Achievements/ Awards/ Notable work done']]&.value.to_s}"
+        p "additional_info = #{i[position['Additional Info']]&.value.to_s}"
+        p "home_taluka = #{i[position['Home Taluka']]&.value.to_s}"
+        p "posting_taluka = #{i[position['Posting Taluka']]&.value.to_s}"
+        p "education = #{i[position['Education']]&.value.to_s}"
+        p "present_post = #{i[position['Present Post']]&.value.to_s}"
+      rescue Exception => e
+      end
+      not_saved << row
     end
   end
   return not_saved

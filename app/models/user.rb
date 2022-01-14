@@ -129,6 +129,10 @@ class User < ActiveRecord::Base
       "posting_taluka",
       "batch",
       "other_info",
+      "date_of_joining_cadra",
+      "past_postings",
+      "additional_info",
+      "achievements"
       ).merge(user_id: self.id)
    end
 
@@ -160,9 +164,10 @@ def self.import(file)
         next
       end
       if(data[i][2].to_s.blank? && data[i][3].to_s.blank? && data[i][4].to_s.blank?)
-        not_saved<<i+1
+        not_saved << i+1
         next
-      end  
+      end
+      
       u = User.find_by_email(data[i][4].to_s)
       if u 
       elsif (!data[i][2].to_s.blank? && get_user(data[i][2].to_s)) 
@@ -188,7 +193,7 @@ def self.import(file)
 
       u.save!
     rescue Exception => e
-      not_saved<<i+1
+      not_saved << i+1
     end
   end
   return not_saved

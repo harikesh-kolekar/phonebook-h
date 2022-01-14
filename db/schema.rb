@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201207081733) do
+ActiveRecord::Schema.define(version: 20220114093800) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -121,12 +121,19 @@ ActiveRecord::Schema.define(version: 20201207081733) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "present_postings", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "designation_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string   "name"
     t.string   "designation"
     t.string   "education"
     t.string   "phone_no"
-    t.string   "mobile_no1",                   default: "",   null: false
+    t.string   "mobile_no1",                      default: "",   null: false
     t.string   "mobile_no2"
     t.string   "email"
     t.string   "home_taluka_id"
@@ -134,23 +141,27 @@ ActiveRecord::Schema.define(version: 20201207081733) do
     t.date     "date_of_join_dept"
     t.date     "posting_date"
     t.string   "present_post"
-    t.string   "home_taluka",                  default: "NA"
-    t.string   "home_district",                default: "NA"
-    t.string   "posting_district",             default: "NA"
-    t.string   "posting_taluka",               default: "NA"
+    t.string   "home_taluka",                     default: "NA"
+    t.string   "home_district",                   default: "NA"
+    t.string   "posting_district",                default: "NA"
+    t.string   "posting_taluka",                  default: "NA"
     t.string   "batch"
     t.string   "other_info"
     t.string   "photo_file_name"
     t.string   "photo_content_type"
-    t.integer  "photo_file_size",    limit: 8
+    t.integer  "photo_file_size",       limit: 8
     t.datetime "photo_updated_at"
     t.string   "icard_file_name"
     t.string   "icard_content_type"
-    t.integer  "icard_file_size",    limit: 8
+    t.integer  "icard_file_size",       limit: 8
     t.datetime "icard_updated_at"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.integer  "user_id"
+    t.date     "date_of_joining_cadra"
+    t.text     "past_postings"
+    t.text     "additional_info"
+    t.text     "achievements"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -216,6 +227,10 @@ ActiveRecord::Schema.define(version: 20201207081733) do
     t.datetime "approved_at"
     t.string   "sim_number1"
     t.string   "sim_number2"
+    t.date     "date_of_joining_cadra"
+    t.text     "past_postings"
+    t.text     "additional_info"
+    t.text     "achievements"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
