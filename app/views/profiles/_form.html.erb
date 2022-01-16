@@ -112,7 +112,7 @@
      <div class="form-group col-md-6">
           <%= f.label :home_taluka, "Home Taluka:",:class => "col-sm-3 control-label"  %>
        <div class="col-sm-8">
-          <%= f.select :home_taluka, options_from_collection_for_select(@home_talukas,"name","name",@home_taluka.name),{}, {:class => "form-control"}  %>
+          <%= f.select :home_taluka, options_from_collection_for_select(@home_talukas,"name","name",@home_taluka),{}, {:class => "form-control"}  %>
        </div>
     </div>
   </div>
@@ -129,7 +129,7 @@
     
          <%= f.label :posting_taluka, "Posting Taluka:",:class => "col-sm-3 control-label"  %>
      <div class="col-sm-8">
-         <%= f.select :posting_taluka, options_from_collection_for_select(@posting_talukas,"name","name",@posting_taluka.name),{}, {:class => "form-control"} %>
+         <%= f.select :posting_taluka, options_from_collection_for_select(@posting_talukas,"name","name",@posting_taluka),{}, {:class => "form-control"} %>
       </div>
     </div> 
   </div>  
