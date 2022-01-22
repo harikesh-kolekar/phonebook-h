@@ -5,7 +5,12 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-
+ DESIGNATION_ACCESS={"Dy.Collector" => ["Dy.Collector", "Additional Collector", "Tahsildar", "IAS", "Revenue Dept Persons", "Others"],
+"Additional Collector" => ["Dy.Collector", "Additional Collector", "Tahsildar", "IAS", "Revenue Dept Persons", "Others"],
+"Tahsildar" => ["Dy.Collector", "Additional Collector", "Tahsildar", "IAS", "Revenue Dept Persons", "Others"],
+"IAS" => ["Dy.Collector", "Additional Collector", "Tahsildar", "IAS", "Revenue Dept Persons", "Others"],
+"Revenue Dept Persons" => ["Dy.Collector", "Additional Collector", "Tahsildar", "IAS", "Revenue Dept Persons", "Others"],
+"Others" => ["Dy.Collector", "Additional Collector", "Tahsildar", "IAS", "Revenue Dept Persons", "Others"]}
 module PhonebookH
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -22,5 +27,6 @@ module PhonebookH
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+   
   end
 end

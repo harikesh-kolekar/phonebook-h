@@ -68,6 +68,7 @@ class User < ActiveRecord::Base
    validates :sim_number2, uniqueness: true, allow_blank: true
    validates :gcm_api_key, uniqueness: true, allow_blank: true
    after_save :update_profile
+   before_create :update_access_permission
    has_one :profile, dependent: :destroy
    has_many :forums
 
@@ -84,6 +85,8 @@ class User < ActiveRecord::Base
    scope :declined_users, -> { where('gcm_api_key IS NOT NULL and approve_status = 2') }
    # scope :profile, -> { where('gcm_api_key IS NULL or (gcm_api_key IS NOT NULL and approve_status = 1) ') }
    # scope :profile, -> { where('gcm_api_key IS NULL') }
+   
+   serialize :access_permission, Array
 
    def designation_id
     Designation.find_by(name: self.designation).try(:id)
@@ -95,7 +98,10 @@ class User < ActiveRecord::Base
      return if profile.blank?
      profile.update(get_profile_attr_from_user)
      update_profile_images(profile)
-     
+   end
+   
+   def update_access_permission
+     self.access_permission = DESIGNATION_ACCESS[self.designation]
    end
 
    def add_to_profile
