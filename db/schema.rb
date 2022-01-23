@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220122110852) do
+ActiveRecord::Schema.define(version: 20220122174935) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -100,6 +100,16 @@ ActiveRecord::Schema.define(version: 20220122110852) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.string   "title"
+  end
+
+  create_table "mcs_infos", force: :cascade do |t|
+    t.string   "info_type"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size",    limit: 8
+    t.datetime "attachment_updated_at"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "notifications", force: :cascade do |t|

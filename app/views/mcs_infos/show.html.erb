@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Info type:</strong>
+  <%= @mcs_info.info_type %>
+</p>
+
+<p>
+  <strong>Attachment:</strong>
+  <%= @mcs_info.attachment %>
+</p>
+
+<%= link_to 'Edit', edit_mcs_info_path(@mcs_info) %> |
+<%= link_to 'Back', mcs_infos_path %>

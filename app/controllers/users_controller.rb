@@ -33,18 +33,31 @@ class UsersController < AdminController
   end
 
 def edit
-	@user = User.find(params[:id])
-    @home_district = District.find_by_name(@user.home_district) rescue nil
-    @home_district = District.find_by_name("NA") if @home_district.nil?
-    @home_talukas = @home_district.talukas
-    @home_taluka = @home_talukas.find_by_name(@user.home_taluka) rescue nil
-    @home_taluka = "NA" if @home_taluka.nil?
-    @posting_district = District.find_by_name(@user.posting_district) rescue nil
-    @posting_district = District.find_by_name("NA") if @posting_district.nil?
-    @posting_talukas = @posting_district.talukas
-    @posting_taluka = @posting_talukas.find_by_name(@user.posting_taluka) rescue nil
-    @posting_taluka = "NA" if @posting_taluka.nil?
-    @url = user_path(@user)
+# 	@user = User.find(params[:id])
+#     @home_district = District.find_by_name(@user.home_district) rescue nil
+#     @home_district = District.find_by_name("NA") if @home_district.nil?
+#     @home_talukas = @home_district.talukas
+#     @home_taluka = @home_talukas.find_by_name(@user.home_taluka) rescue nil
+#     @home_taluka = "NA" if @home_taluka.nil?
+#     @posting_district = District.find_by_name(@user.posting_district) rescue nil
+#     @posting_district = District.find_by_name("NA") if @posting_district.nil?
+#     @posting_talukas = @posting_district.talukas
+#     @posting_taluka = @posting_talukas.find_by_name(@user.posting_taluka) rescue nil
+#     @posting_taluka = "NA" if @posting_taluka.nil?
+#     @url = user_path(@user)
+@user = User.find(params[:id])
+@home_district = District.find_by_name(@user.home_district) rescue nil
+        @home_district = District.find_by_name("NA") if @home_district.nil?
+        @home_talukas = @home_district.talukas
+        @home_taluka = @home_talukas.find_by_name(@user.home_taluka).name rescue nil
+        @home_taluka = "NA" if @home_taluka.nil?
+        @posting_district = District.find_by_name(@user.posting_district) rescue nil
+        @posting_district = District.find_by_name("NA") if @posting_district.nil?
+        @posting_talukas = @posting_district.talukas
+        @posting_taluka = @posting_talukas.find_by_name(@user.posting_taluka).name rescue nil
+        @posting_taluka = "NA" if @posting_taluka.nil?
+        @present_posts = Designation.find_by_name( @user.designation).present_postings rescue []
+        @url = user_path(@user)
 
   end
 
@@ -54,7 +67,7 @@ def edit
     update_user_params["date_of_birth"] = string_to_date(params[:user][:date_of_birth]) 
     update_user_params["date_of_join_dept"] = string_to_date(params[:user][:date_of_join_dept]) 
     update_user_params["posting_date"] = string_to_date(params[:user][:posting_date]) 
-
+    update_user_params["access_permission"] = params[:user][:access_permission].select{|a|a.present?}
     respond_to do |format|
       if @user.update(update_user_params)
         format.html { redirect_to '/users/all', notice: 'User was successfully updated.' }
@@ -110,7 +123,7 @@ def edit
   end
 
     def user_params
-      params.require(:user).permit(:name, :designation, :education, :phone_no, :mobile_no1, :mobile_no2, :home_taluka, :present_post, :posting_taluka, :batch, :other_info, :imei_code, :gcm_api_key, :home_district, :posting_district, :email, :photo, :icard )
+      params.require(:user).permit(:name, :designation, :education, :phone_no, :mobile_no1, :mobile_no2, :home_taluka, :present_post, :posting_taluka, :batch, :other_info, :imei_code, :gcm_api_key, :home_district, :posting_district, :email, :photo, :icard, :access_permission )
     end
 
 end

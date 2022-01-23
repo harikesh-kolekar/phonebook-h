@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :mcs_infos
   devise_for :users
   get 'users/:id/edit' => 'users#edit'
   get 'users/:type' => 'users#index', :as => "users"
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
   namespace :v1 do
       resources :notifications
       resources :designations
+      resources :mcs_infos
       resources :forums, only:[:index, :show, :create, :update] do
         post 'replay'
         get 'close', on: :member
